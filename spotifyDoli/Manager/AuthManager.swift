@@ -109,95 +109,96 @@ final class AuthManager {
     
     private var onRefreshBlocks = [((String) -> Void)]()
 
-        /// Supplies valid token to be used with API Calls
-        public func withValidToken(completion: @escaping (String) -> Void) {
-            guard !refreshingToken else {
-                // Append the compleiton
-                onRefreshBlocks.append(completion)
-                return
-            }
-
-            if shouldRefreshToken {
-                // Refresh
-                refreshIfNeeded { [weak self] success in
-                    if let token = self?.accessToken, success {
-                        completion(token)
-                    }
-                }
-            }
-            else if let token = accessToken {
-                completion(token)
-            }
+        // Supplies valid token to be used with API Calls
+    
+    public func withValidToken(completion: @escaping (String) -> Void) {
+        guard !refreshingToken else {
+            // Append the compleiton
+            onRefreshBlocks.append(completion)
+            return
         }
 
-        public func refreshIfNeeded(completion: ((Bool) -> Void)?) {
-            guard !refreshingToken else {
-                return
+        if shouldRefreshToken {
+            // Refresh
+            refreshIfNeeded { [weak self] success in
+                if let token = self?.accessToken, success {
+                    completion(token)
+                }
             }
+        }
+        else if let token = accessToken {
+            completion(token)
+        }
+    }
 
-            guard shouldRefreshToken else {
-                completion?(true)
-                return
-            }
+    public func refreshIfNeeded(completion: ((Bool) -> Void)?) {
+        guard !refreshingToken else {
+            return
+        }
 
-            guard let refreshToken = self.refreshToken else{
-                return
-            }
+        guard shouldRefreshToken else {
+            completion?(true)
+            return
+        }
 
-            // Refresh the token
-            guard let url = URL(string: Constants.tokenAPIURL) else {
-                return
-            }
+        guard let refreshToken = self.refreshToken else{
+            return
+        }
 
-            refreshingToken = true
+        // Refresh the token
+        guard let url = URL(string: Constants.tokenAPIURL) else {
+            return
+        }
 
-            var components = URLComponents()
-            components.queryItems = [
-                URLQueryItem(name: "grant_type",
-                             value: "refresh_token"),
-                URLQueryItem(name: "refresh_token",
-                             value: refreshToken),
-            ]
+        refreshingToken = true
 
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            request.setValue("application/x-www-form-urlencoded ",
-                             forHTTPHeaderField: "Content-Type")
-            request.httpBody = components.query?.data(using: .utf8)
+        var components = URLComponents()
+        components.queryItems = [
+            URLQueryItem(name: "grant_type",
+                         value: "refresh_token"),
+            URLQueryItem(name: "refresh_token",
+                         value: refreshToken),
+        ]
 
-            let basicToken = Constants.clientID+":"+Constants.clientSecret
-            let data = basicToken.data(using: .utf8)
-            guard let base64String = data?.base64EncodedString() else {
-                print("Failure to get base64")
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/x-www-form-urlencoded ",
+                         forHTTPHeaderField: "Content-Type")
+        request.httpBody = components.query?.data(using: .utf8)
+
+        let basicToken = Constants.clientID+":"+Constants.clientSecret
+        let data = basicToken.data(using: .utf8)
+        guard let base64String = data?.base64EncodedString() else {
+            print("Failure to get base64")
+            completion?(false)
+            return
+        }
+
+        request.setValue("Basic \(base64String)",
+                         forHTTPHeaderField: "Authorization")
+
+        let task = URLSession.shared.dataTask(with: request) { [weak self] data, _, error in
+            self?.refreshingToken = false
+            guard let data = data,
+                  error == nil else {
                 completion?(false)
                 return
             }
 
-            request.setValue("Basic \(base64String)",
-                             forHTTPHeaderField: "Authorization")
-
-            let task = URLSession.shared.dataTask(with: request) { [weak self] data, _, error in
-                self?.refreshingToken = false
-                guard let data = data,
-                      error == nil else {
-                    completion?(false)
-                    return
-                }
-
-                do {
-                    let result = try JSONDecoder().decode(AuthResponse.self, from: data)
-                    self?.onRefreshBlocks.forEach { $0(result.access_token) }
-                    self?.onRefreshBlocks.removeAll()
-                    self?.cacheToken(result: result)
-                    completion?(true)
-                }
-                catch {
-                    print(error.localizedDescription)
-                    completion?(false)
-                }
+            do {
+                let result = try JSONDecoder().decode(AuthResponse.self, from: data)
+                self?.onRefreshBlocks.forEach { $0(result.access_token) }
+                self?.onRefreshBlocks.removeAll()
+                self?.cacheToken(result: result)
+                completion?(true)
             }
-            task.resume()
+            catch {
+                print(error.localizedDescription)
+                completion?(false)
+            }
         }
+        task.resume()
+    }
 
     
     private func cacheToken(result: AuthResponse) {
