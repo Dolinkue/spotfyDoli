@@ -19,6 +19,21 @@ class HomeViewController: UIViewController {
             target: self,
             action: #selector(didTapSettings)
         )
+        
+        fetchData()
+    }
+    
+    private func fetchData(){
+        APICaller.shared.getFeaturedFlaylists { result in
+            switch result {
+            case .success(let result):
+                print(result)
+                break
+            case .failure(let error):
+                print(error.localizedDescription)
+                break
+            }
+        }
     }
     
     @objc func didTapSettings() {

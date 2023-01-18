@@ -36,6 +36,10 @@
 		6F9FE80E297721C000668F35 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9FE80D297721C000668F35 /* SettingModel.swift */; };
 		6F9FE8112977260B00668F35 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 6F9FE8102977260B00668F35 /* SDWebImage */; };
 		6F9FE8132977260B00668F35 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6F9FE8122977260B00668F35 /* SDWebImageMapKit */; };
+		6F9FE815297811D100668F35 /* NewReleasesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9FE814297811D100668F35 /* NewReleasesResponse.swift */; };
+		6F9FE817297817AD00668F35 /* FeaturedPlaylistsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9FE816297817AD00668F35 /* FeaturedPlaylistsResponse.swift */; };
+		6F9FE81929781D0100668F35 /* RecommendationsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9FE81829781D0100668F35 /* RecommendationsResponse.swift */; };
+		6F9FE81B29781D1300668F35 /* RecommendedGenresResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9FE81A29781D1300668F35 /* RecommendedGenresResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +72,10 @@
 		6F9FE8092976C29C00668F35 /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
 		6F9FE80B2976E0A900668F35 /* APIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIImage.swift; sourceTree = "<group>"; };
 		6F9FE80D297721C000668F35 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
+		6F9FE814297811D100668F35 /* NewReleasesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReleasesResponse.swift; sourceTree = "<group>"; };
+		6F9FE816297817AD00668F35 /* FeaturedPlaylistsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedPlaylistsResponse.swift; sourceTree = "<group>"; };
+		6F9FE81829781D0100668F35 /* RecommendationsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsResponse.swift; sourceTree = "<group>"; };
+		6F9FE81A29781D1300668F35 /* RecommendedGenresResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendedGenresResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +150,10 @@
 				6F9FE8092976C29C00668F35 /* AuthResponse.swift */,
 				6F9FE80B2976E0A900668F35 /* APIImage.swift */,
 				6F9FE80D297721C000668F35 /* SettingModel.swift */,
+				6F9FE814297811D100668F35 /* NewReleasesResponse.swift */,
+				6F9FE816297817AD00668F35 /* FeaturedPlaylistsResponse.swift */,
+				6F9FE81829781D0100668F35 /* RecommendationsResponse.swift */,
+				6F9FE81A29781D1300668F35 /* RecommendedGenresResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -280,9 +292,11 @@
 				6F9FE80C2976E0A900668F35 /* APIImage.swift in Sources */,
 				6F9FE800297586A200668F35 /* Playlist.swift in Sources */,
 				6F9FE7FA2975856700668F35 /* AuthManager.swift in Sources */,
+				6F9FE81B29781D1300668F35 /* RecommendedGenresResponse.swift in Sources */,
 				6F9FE7F8297584A800668F35 /* SearchResultsViewController.swift in Sources */,
 				6F9FE7EE297572D300668F35 /* WelcomeViewController.swift in Sources */,
 				6F9FE7F22975731300668F35 /* ProfileViewController.swift in Sources */,
+				6F9FE815297811D100668F35 /* NewReleasesResponse.swift in Sources */,
 				6F9FE7E4297571FC00668F35 /* TabBarViewController.swift in Sources */,
 				6F9FE7FE2975868400668F35 /* HapticsManager.swift in Sources */,
 				6F9FE80A2976C29C00668F35 /* AuthResponse.swift in Sources */,
@@ -292,6 +306,7 @@
 				6F9FE7C82972543100668F35 /* AppDelegate.swift in Sources */,
 				6F9FE806297586D000668F35 /* UserProfile.swift in Sources */,
 				6F9FE8082975979700668F35 /* Extensions.swift in Sources */,
+				6F9FE81929781D0100668F35 /* RecommendationsResponse.swift in Sources */,
 				6F9FE7E82975726E00668F35 /* LibraryViewController.swift in Sources */,
 				6F9FE804297586C000668F35 /* Artist.swift in Sources */,
 				6F9FE7F6297573B300668F35 /* PlayListViewController.swift in Sources */,
@@ -299,6 +314,7 @@
 				6F9FE80E297721C000668F35 /* SettingModel.swift in Sources */,
 				6F9FE7F42975739800668F35 /* PlayerViewController.swift in Sources */,
 				6F9FE7FC2975866F00668F35 /* APICaller.swift in Sources */,
+				6F9FE817297817AD00668F35 /* FeaturedPlaylistsResponse.swift in Sources */,
 				6F9FE7F0297572F800668F35 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
