@@ -27,8 +27,8 @@ enum BrowseSectionType {
 class HomeViewController: UIViewController {
     
     private var newAlbums: [Album] = []
-        private var playlists: [Playlist] = []
-        private var tracks: [AudioTrack] = []
+    private var playlists: [Playlist] = []
+    private var tracks: [AudioTrack] = []
 
     
     private var collectionView: UICollectionView = UICollectionView(
@@ -174,6 +174,7 @@ class HomeViewController: UIViewController {
         self.newAlbums = newAlbums
         self.playlists = playlists
         self.tracks = tracks
+        
         sections.append(.newReleases(viewModels: newAlbums.compactMap({
             return NewReleasesCellViewModel(
                 name: $0.name,
@@ -407,4 +408,29 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         header.configure(with: title)
         return header
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        HapticsManager.shared.vibrateForSelection()
+        let section = sections[indexPath.section]
+        switch section {
+        case .featuredPlaylists:
+            let playlist = playlists[indexPath.row]
+            let vc = PlaylistViewController(playlist: playlist)
+            vc.title = playlist.name
+            vc.navigationItem.largeTitleDisplayMode = .never
+            navigationController?.pushViewController(vc, animated: true)
+        case .newReleases:
+            let album = newAlbums[indexPath.row]
+            let vc = AlbumViewController(album: album)
+            vc.title = album.name
+            vc.navigationItem.largeTitleDisplayMode = .never
+            navigationController?.pushViewController(vc, animated: true)
+        case .recommendedTracks:
+            let track = tracks[indexPath.row]
+       //     PlaybackPresenter.shared.startPlayback(from: self, track: track)
+        }
+    }
+    
+    
 }

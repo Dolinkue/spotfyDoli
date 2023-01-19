@@ -1,18 +1,14 @@
 //
-//  PlayListViewController.swift
+//  AlbumViewController.swift
 //  spotifyDoli
 //
-//  Created by Nicolas Dolinkue on 16/01/2023.
+//  Created by Nicolas Dolinkue on 19/01/2023.
 //
 
 import UIKit
 
-class PlaylistViewController: UIViewController {
+class AlbumViewController: UIViewController {
     
-    private let playlist: Playlist
-
-    public var isOwner = false
-
     private let collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { _, _ -> NSCollectionLayoutSection? in
@@ -47,9 +43,14 @@ class PlaylistViewController: UIViewController {
         })
     )
 
+    private let album: Album
     
-    init(playlist: Playlist) {
-        self.playlist = playlist
+    private var viewModels = [AlbumCollectionViewCellViewModel]()
+
+    private var tracks = [AudioTrack]()
+
+    init(album: Album) {
+        self.album = album
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -59,28 +60,26 @@ class PlaylistViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = playlist.name
+        title = album.name
         view.backgroundColor = .systemBackground
         fetchData()
     }
     
-    private var viewModels = [RecommendedTrackCellViewModel]()
-    private var tracks = [AudioTrack]()
 
     func fetchData() {
-        APICaller.shared.getPlaylistDetails(for: playlist) { [weak self] result in
+        APICaller.shared.getAlbumDetails(for: album) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let model):
-                    self?.tracks = model.tracks.items.compactMap({ $0.track })
+                    self?.tracks = model.tracks.items
                     self?.viewModels = model.tracks.items.compactMap({
-                        RecommendedTrackCellViewModel(
-                            name: $0.track.name,
-                            artistName: $0.track.artists.first?.name ?? "-",
-                            artworkURL: URL(string: $0.track.album?.images.first?.url ?? "")
+                        AlbumCollectionViewCellViewModel(
+                            name: $0.name,
+                            artistName: $0.artists.first?.name ?? "-"
                         )
                     })
                     self?.collectionView.reloadData()
+
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
@@ -88,5 +87,7 @@ class PlaylistViewController: UIViewController {
         }
     }
 
+    
+    
 
 }
