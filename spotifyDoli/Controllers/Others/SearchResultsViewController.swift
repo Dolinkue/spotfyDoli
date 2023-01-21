@@ -98,6 +98,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         let result = sections[indexPath.section].results[indexPath.row]
 
         switch result {
+            
         case .artist(let artist):
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: SearchResultDefaultTableViewCell.identfier,
@@ -111,6 +112,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             )
             cell.configure(with: viewModel)
             return cell
+            
         case .album(let album):
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: SearchResultSubtitleTableViewCell.identfier,
@@ -125,6 +127,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             )
             cell.configure(with: viewModel)
             return cell
+            
         case .track(let track):
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: SearchResultSubtitleTableViewCell.identfier,
@@ -140,6 +143,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             cell.configure(with: viewModel)
             return cell
         case .playlist(let playlist):
+            
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: SearchResultSubtitleTableViewCell.identfier,
                 for: indexPath

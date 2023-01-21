@@ -28,6 +28,7 @@ class SearchResultDefaultTableViewCell: UITableViewCell {
         contentView.addSubview(label)
         contentView.addSubview(iconImageViewe)
         contentView.clipsToBounds = true
+        // la flecha que muestra al costado de la celda
         accessoryType = .disclosureIndicator
     }
 
