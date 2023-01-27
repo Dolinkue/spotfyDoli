@@ -89,6 +89,7 @@ class AlbumViewController: UIViewController {
             APICaller.shared.saveAlbum(album: strongSelf.album) { success in
                 if success {
                     HapticsManager.shared.vibrate(for: .success)
+                    // aca avisa el cambio en el notification para el observer
                     NotificationCenter.default.post(name: .albumSavedNotification, object: nil)
                 }
                 else {
@@ -172,7 +173,7 @@ extension AlbumViewController: UICollectionViewDelegate, UICollectionViewDataSou
         collectionView.deselectItem(at: indexPath, animated: true)
         var track = tracks[indexPath.row]
         track.album = self.album
-      //  PlaybackPresenter.shared.startPlayback(from: self, track: track)
+        PlaybackPresenter.shared.startPlayback(from: self, track: track)
     }
 }
 
@@ -183,6 +184,6 @@ extension AlbumViewController: PlaylistHeaderCollectionReusableViewDelegate {
             track.album = self.album
             return track
         })
-   //     PlaybackPresenter.shared.startPlayback(from: self, tracks: tracksWithAlbum)
+        PlaybackPresenter.shared.startPlayback(from: self, tracks: tracksWithAlbum)
     }
 }
